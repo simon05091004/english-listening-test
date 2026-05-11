@@ -6,7 +6,7 @@
 
 1. 將 `index.html` 部署到 GitHub Pages、Netlify、Google Sites 可嵌入頁面，或其他靜態網頁空間。
 2. 開啟部署後的網址。
-3. 在右側「測驗網址」貼上正式網址，按「產生 QR」。
+3. 首頁會自動顯示測驗 QR code，也可以直接按「前往作答」。
 4. 學生掃 QR code 後填寫年級、班級、座號，格式會記錄為 `__年__班__號`。
 5. 學生送出後會立即看到 100 分制分數。
 
@@ -17,6 +17,10 @@
 ## 存到 Firebase Firestore
 
 可以把學生作答紀錄集中存到 Firebase 的 Cloud Firestore。設定完成後，每位學生送出時會新增一筆文件到 `listeningTestSubmissions` collection。
+
+目前 `index.html` 內的 Firebase 設定已保持空白，方便先上傳到 GitHub Pages。若不填 Firebase 設定，學生仍可作答並立即看分數，但雲端 Firestore 不會收到紀錄；本機瀏覽器歷程與 CSV 下載仍可使用。
+
+Firebase Web 的 `apiKey` 不是管理員密碼，但放在公開網頁中仍需要搭配嚴格 Firestore Rules。若不想讓任何 Firebase 設定出現在公開 GitHub，建議改用後端代理，例如 Cloud Functions 或 Apps Script，由後端代寫資料庫。
 
 ### Firebase 設定步驟
 
