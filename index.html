@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>六下英語聽力測驗 Unit 3-4</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #5b6673;
+      --line: #d8dee6;
+      --paper: #fbfaf7;
+      --panel: #ffffff;
+      --accent: #0f766e;
+      --accent-dark: #0b5f59;
+      --warn: #b45309;
+      --good: #15803d;
+      --bad: #b91c1c;
+      --shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(236, 245, 243, 0.9), rgba(251, 250, 247, 0.92) 46%),
+        var(--paper);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .app {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 44px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: end;
+      padding: 18px 0 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.55rem, 2.5vw, 2.35rem);
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .timer {
+      min-width: 152px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .timer strong {
+      display: block;
+      font-size: 1.7rem;
+      line-height: 1.1;
+    }
+
+    .timer span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 22px;
+      margin-top: 22px;
+      align-items: start;
+    }
+
+    .panel,
+    .question,
+    dialog {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .panel h2,
+    .question h3,
+    dialog h2 {
+      margin: 0 0 12px;
+      font-size: 1.08rem;
+    }
+
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 9px 10px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button {
+      min-height: 42px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      padding: 9px 13px;
+      color: #fff;
+      background: var(--accent);
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--accent-dark);
+    }
+
+    button.secondary {
+      color: var(--ink);
+      background: #eef3f2;
+      border-color: #c9d6d3;
+    }
+
+    button.secondary:hover {
+      background: #dfe9e7;
+    }
+
+    button.ghost {
+      color: var(--accent-dark);
+      background: transparent;
+      border-color: var(--line);
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .question {
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .q-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .q-head h3 {
+      margin: 0;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      color: #075985;
+      background: #e0f2fe;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    .prompt {
+      margin: 8px 0 12px;
+      color: var(--muted);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .option {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      min-height: 48px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .option input {
+      width: auto;
+      min-height: auto;
+      margin-top: 4px;
+      accent-color: var(--accent);
+    }
+
+    .side {
+      position: sticky;
+      top: 14px;
+    }
+
+    .scorebox {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfdfe;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.55rem;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .history-list {
+      display: grid;
+      gap: 10px;
+      max-height: 360px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .record {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: #fff;
+      font-size: 0.92rem;
+    }
+
+    .record strong {
+      display: block;
+    }
+
+    .record span {
+      color: var(--muted);
+    }
+
+    .notice {
+      margin: 10px 0 0;
+      color: var(--warn);
+      font-size: 0.92rem;
+    }
+
+    .result {
+      display: none;
+      border-left: 4px solid var(--accent);
+    }
+
+    .result.visible {
+      display: block;
+    }
+
+    .answer-review {
+      margin-top: 12px;
+      display: grid;
+      gap: 8px;
+      font-size: 0.92rem;
+    }
+
+    .ok {
+      color: var(--good);
+    }
+
+    .miss {
+      color: var(--bad);
+    }
+
+    .qr-preview {
+      display: grid;
+      place-items: center;
+      min-height: 196px;
+      border: 1px dashed #a9b8c5;
+      border-radius: 8px;
+      background: #f8fafc;
+      overflow: hidden;
+    }
+
+    .qr-preview img {
+      width: 180px;
+      height: 180px;
+    }
+
+    dialog {
+      width: min(640px, calc(100% - 28px));
+      padding: 22px;
+    }
+
+    dialog::backdrop {
+      background: rgba(15, 23, 42, 0.38);
+    }
+
+    @media (max-width: 880px) {
+      header,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side {
+        position: static;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .app {
+        width: min(100% - 22px, 1120px);
+        padding-top: 16px;
+      }
+
+      .student-grid,
+      .options,
+      .scorebox {
+        grid-template-columns: 1fr;
+      }
+
+      .q-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <section>
+        <h1>六下英語聽力測驗 Unit 3-4</h1>
+        <p class="subtitle">範圍：Unit 3 How Much Is the T-shirt? / Unit 4 What's Your Favorite ...。請戴耳機或在安靜環境作答，每題可重播。</p>
+      </section>
+      <aside class="timer" aria-live="polite">
+        <strong id="timeLeft">20:00</strong>
+        <span>聽力測驗時間</span>
+      </aside>
+    </header>
+
+    <section class="layout">
+      <div>
+        <section class="panel">
+          <h2>學生資料</h2>
+          <div class="student-grid">
+            <label>年級
+              <input id="grade" inputmode="numeric" maxlength="1" placeholder="例：6">
+            </label>
+            <label>班級
+              <input id="classNo" inputmode="numeric" maxlength="2" placeholder="例：3">
+            </label>
+            <label>座號
+              <input id="seatNo" inputmode="numeric" maxlength="2" placeholder="例：12">
+            </label>
+          </div>
+          <div class="actions">
+            <button id="startBtn" type="button">開始作答</button>
+            <button class="secondary" id="playAllBtn" type="button">播放測驗說明</button>
+          </div>
+          <p class="notice">作答標題會自動記錄為「__年__班__號」。送出後立即顯示分數，滿分 100 分。</p>
+        </section>
+
+        <form id="quizForm" aria-label="聽力測驗題目"></form>
+
+        <section class="panel result" id="resultPanel" aria-live="polite">
+          <h2>測驗結果</h2>
+          <p id="resultText"></p>
+          <div class="answer-review" id="answerReview"></div>
+        </section>
+      </div>
+
+      <aside class="side">
+        <section class="panel">
+          <h2>作答狀態</h2>
+          <div class="scorebox">
+            <div class="metric">
+              <strong id="answeredCount">0</strong>
+              <span>已作答題數</span>
+            </div>
+            <div class="metric">
+              <strong id="currentScore">--</strong>
+              <span>送出後分數</span>
+            </div>
+          </div>
+          <div class="actions">
+            <button id="submitBtn" type="button" disabled>送出並看分數</button>
+            <button class="secondary" id="resetBtn" type="button">重新作答</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>QR Code</h2>
+          <label>測驗網址
+            <input id="quizUrl" placeholder="部署後貼上網址">
+          </label>
+          <div class="actions">
+            <button class="secondary" id="qrBtn" type="button">產生 QR</button>
+          </div>
+          <div class="qr-preview" id="qrPreview">貼上測驗網址後產生 QR code</div>
+        </section>
+
+        <section class="panel">
+          <h2>作答歷程</h2>
+          <div class="history-list" id="historyList"></div>
+          <div class="actions">
+            <button class="secondary" id="downloadCsvBtn" type="button">下載 CSV</button>
+            <button class="ghost" id="clearHistoryBtn" type="button">清除本機紀錄</button>
+          </div>
+          <p class="notice">若要全班集中到 Google Sheet，請在程式碼的 <code>SUBMIT_ENDPOINT</code> 填入 Apps Script 網址。</p>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <dialog id="scoreDialog">
+    <h2>已送出</h2>
+    <p id="dialogText"></p>
+    <div class="actions">
+      <button id="closeDialogBtn" type="button">知道了</button>
+    </div>
+  </dialog>
+
+  <script>
+    const SUBMIT_ENDPOINT = "";
+    const STORAGE_KEY = "hewgo8-unit3-4-listening-history";
+    const TEST_SECONDS = 20 * 60;
+
+    const questions = [
+      {
+        unit: "Unit 3",
+        listen: "How much is the T-shirt? It is two hundred and fifty dollars.",
+        prompt: "The student wants to buy a T-shirt. How much is it?",
+        options: ["$150", "$250", "$350", "$450"],
+        answer: 1
+      },
+      {
+        unit: "Unit 3",
+        listen: "A: How much are the shorts? B: They are three hundred dollars.",
+        prompt: "How much are the shorts?",
+        options: ["$100", "$200", "$300", "$400"],
+        answer: 2
+      },
+      {
+        unit: "Unit 3",
+        listen: "I like the cap. It is blue and it is ninety dollars.",
+        prompt: "What color is the cap?",
+        options: ["Red", "Blue", "Yellow", "Green"],
+        answer: 1
+      },
+      {
+        unit: "Unit 3",
+        listen: "A: May I help you? B: Yes, please. I want a jacket.",
+        prompt: "What does the customer want?",
+        options: ["A skirt", "A jacket", "A cap", "A dress"],
+        answer: 1
+      },
+      {
+        unit: "Unit 3",
+        listen: "The socks are fifty dollars. The shoes are six hundred dollars.",
+        prompt: "Which item is fifty dollars?",
+        options: ["The socks", "The shoes", "The T-shirt", "The shorts"],
+        answer: 0
+      },
+      {
+        unit: "Unit 3",
+        listen: "A: How much is the skirt? B: It is four hundred and twenty dollars.",
+        prompt: "How much is the skirt?",
+        options: ["$240", "$320", "$420", "$520"],
+        answer: 2
+      },
+      {
+        unit: "Unit 3",
+        listen: "I have five hundred dollars. I can buy the bag. It is four hundred dollars.",
+        prompt: "How much is the bag?",
+        options: ["$300", "$400", "$500", "$600"],
+        answer: 1
+      },
+      {
+        unit: "Unit 3",
+        listen: "The red dress is seven hundred dollars. The white dress is eight hundred dollars.",
+        prompt: "Which dress is cheaper?",
+        options: ["The red dress", "The white dress", "Both dresses", "No dress"],
+        answer: 0
+      },
+      {
+        unit: "Unit 3",
+        listen: "A: Are these pants five hundred dollars? B: No, they are five hundred and fifty dollars.",
+        prompt: "How much are the pants?",
+        options: ["$500", "$550", "$600", "$650"],
+        answer: 1
+      },
+      {
+        unit: "Unit 3",
+        listen: "The shirt is small. The T-shirt is large. I want the large T-shirt.",
+        prompt: "What size does the speaker want?",
+        options: ["Small", "Medium", "Large", "Extra small"],
+        answer: 2
+      },
+      {
+        unit: "Unit 4",
+        listen: "A: What's your favorite subject? B: My favorite subject is English.",
+        prompt: "What is the speaker's favorite subject?",
+        options: ["Math", "English", "Art", "Science"],
+        answer: 1
+      },
+      {
+        unit: "Unit 4",
+        listen: "My favorite food is pizza. I eat it on Friday.",
+        prompt: "What is the speaker's favorite food?",
+        options: ["Rice", "Noodles", "Pizza", "Chicken"],
+        answer: 2
+      },
+      {
+        unit: "Unit 4",
+        listen: "A: What's your favorite color? B: My favorite color is purple.",
+        prompt: "What is the favorite color?",
+        options: ["Purple", "Pink", "Black", "White"],
+        answer: 0
+      },
+      {
+        unit: "Unit 4",
+        listen: "Ben likes baseball, but his favorite sport is basketball.",
+        prompt: "What is Ben's favorite sport?",
+        options: ["Baseball", "Basketball", "Soccer", "Dodgeball"],
+        answer: 1
+      },
+      {
+        unit: "Unit 4",
+        listen: "My favorite day is Saturday because I can play with my friends.",
+        prompt: "What is the speaker's favorite day?",
+        options: ["Monday", "Wednesday", "Friday", "Saturday"],
+        answer: 3
+      },
+      {
+        unit: "Unit 4",
+        listen: "A: Is your favorite drink milk tea? B: No. My favorite drink is orange juice.",
+        prompt: "What is the favorite drink?",
+        options: ["Milk tea", "Orange juice", "Water", "Cola"],
+        answer: 1
+      },
+      {
+        unit: "Unit 4",
+        listen: "Lisa's favorite animal is a dog. Tom's favorite animal is a rabbit.",
+        prompt: "What is Tom's favorite animal?",
+        options: ["A cat", "A dog", "A rabbit", "A bird"],
+        answer: 2
+      },
+      {
+        unit: "Unit 4",
+        listen: "My favorite season is winter. I can wear my jacket.",
+        prompt: "Why does the speaker like winter?",
+        options: ["She can swim.", "She can wear her jacket.", "She can eat ice cream.", "She can go fishing."],
+        answer: 1
+      },
+      {
+        unit: "Unit 4",
+        listen: "A: What's your favorite fruit? B: Apples are good, but my favorite fruit is mangoes.",
+        prompt: "What is the favorite fruit?",
+        options: ["Apples", "Bananas", "Mangoes", "Guavas"],
+        answer: 2
+      },
+      {
+        unit: "Unit 4",
+        listen: "My favorite class is music. I can sing and play the recorder.",
+        prompt: "What can the speaker do in music class?",
+        options: ["Sing and play the recorder", "Draw and paint", "Run and jump", "Read and write"],
+        answer: 0
+      }
+    ];
+
+    const quizForm = document.querySelector("#quizForm");
+    const timeLeft = document.querySelector("#timeLeft");
+    const answeredCount = document.querySelector("#answeredCount");
+    const currentScore = document.querySelector("#currentScore");
+    const submitBtn = document.querySelector("#submitBtn");
+    const startBtn = document.querySelector("#startBtn");
+    const resetBtn = document.querySelector("#resetBtn");
+    const resultPanel = document.querySelector("#resultPanel");
+    const resultText = document.querySelector("#resultText");
+    const answerReview = document.querySelector("#answerReview");
+    const historyList = document.querySelector("#historyList");
+    const dialog = document.querySelector("#scoreDialog");
+    const dialogText = document.querySelector("#dialogText");
+
+    let timerId = null;
+    let remaining = TEST_SECONDS;
+    let started = false;
+    let submitted = false;
+    let preferredVoice = null;
+
+    function renderQuestions() {
+      quizForm.innerHTML = questions.map((question, index) => {
+        const options = question.options.map((option, optionIndex) => `
+          <label class="option">
+            <input type="radio" name="q${index}" value="${optionIndex}" disabled>
+            <span>${String.fromCharCode(65 + optionIndex)}. ${option}</span>
+          </label>
+        `).join("");
+
+        return `
+          <article class="question">
+            <div class="q-head">
+              <h3>第 ${index + 1} 題</h3>
+              <span class="tag">${question.unit}</span>
+            </div>
+            <button class="secondary listen-btn" type="button" data-index="${index}" disabled>播放聽力</button>
+            <p class="prompt">${question.prompt}</p>
+            <div class="options">${options}</div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function choosePreferredVoice() {
+      const voices = window.speechSynthesis.getVoices();
+      if (!voices.length) return null;
+
+      const englishVoices = voices.filter((voice) => voice.lang.toLowerCase().startsWith("en"));
+      const femaleVoiceNames = [
+        "samantha",
+        "jenny",
+        "aria",
+        "zira",
+        "susan",
+        "victoria",
+        "karen",
+        "moira",
+        "tessa",
+        "google us english",
+        "google uk english female"
+      ];
+
+      return englishVoices.find((voice) => {
+        const name = voice.name.toLowerCase();
+        return femaleVoiceNames.some((femaleName) => name.includes(femaleName));
+      }) || englishVoices.find((voice) => voice.lang === "en-US") || englishVoices[0] || null;
+    }
+
+    function refreshPreferredVoice() {
+      preferredVoice = choosePreferredVoice();
+    }
+
+    function speak(text) {
+      if (!("speechSynthesis" in window)) {
+        alert("這個瀏覽器不支援語音朗讀，請改用 Chrome、Edge 或 Safari。");
+        return;
+      }
+      if (!preferredVoice) refreshPreferredVoice();
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-US";
+      if (preferredVoice) utterance.voice = preferredVoice;
+      utterance.rate = 0.95;
+      utterance.pitch = 1.05;
+      utterance.volume = 1;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function getStudentTitle() {
+      const grade = document.querySelector("#grade").value.trim();
+      const classNo = document.querySelector("#classNo").value.trim();
+      const seatNo = document.querySelector("#seatNo").value.trim();
+      return `${grade}年${classNo}班${seatNo}號`;
+    }
+
+    function validateStudent() {
+      const grade = document.querySelector("#grade").value.trim();
+      const classNo = document.querySelector("#classNo").value.trim();
+      const seatNo = document.querySelector("#seatNo").value.trim();
+      return Boolean(grade && classNo && seatNo);
+    }
+
+    function setQuizEnabled(enabled) {
+      document.querySelectorAll("input[type='radio'], .listen-btn").forEach((element) => {
+        element.disabled = !enabled;
+      });
+      submitBtn.disabled = !enabled;
+    }
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60).toString().padStart(2, "0");
+      const secs = (seconds % 60).toString().padStart(2, "0");
+      return `${minutes}:${secs}`;
+    }
+
+    function startTimer() {
+      clearInterval(timerId);
+      remaining = TEST_SECONDS;
+      timeLeft.textContent = formatTime(remaining);
+      timerId = setInterval(() => {
+        remaining -= 1;
+        timeLeft.textContent = formatTime(Math.max(remaining, 0));
+        if (remaining <= 0) {
+          clearInterval(timerId);
+          if (!submitted) submitQuiz(true);
+        }
+      }, 1000);
+    }
+
+    function collectAnswers() {
+      return questions.map((_, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        return selected ? Number(selected.value) : null;
+      });
+    }
+
+    function updateAnsweredCount() {
+      const answers = collectAnswers();
+      answeredCount.textContent = answers.filter((answer) => answer !== null).length;
+    }
+
+    function calculateScore(answers) {
+      const correct = answers.reduce((sum, answer, index) => {
+        return sum + (answer === questions[index].answer ? 1 : 0);
+      }, 0);
+      return {
+        correct,
+        score: correct * 5
+      };
+    }
+
+    function getHistory() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveHistory(record) {
+      const history = getHistory();
+      history.unshift(record);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history.slice(0, 120)));
+      renderHistory();
+    }
+
+    async function submitRemote(record) {
+      if (!SUBMIT_ENDPOINT) return;
+      try {
+        await fetch(SUBMIT_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(record)
+        });
+      } catch (error) {
+        console.warn("Remote submit failed", error);
+      }
+    }
+
+    function submitQuiz(autoSubmit = false) {
+      if (!started || submitted) return;
+      if (!validateStudent()) {
+        alert("請先填寫年級、班級、座號。");
+        return;
+      }
+
+      const answers = collectAnswers();
+      const { correct, score } = calculateScore(answers);
+      const record = {
+        title: getStudentTitle(),
+        score,
+        correct,
+        total: questions.length,
+        submittedAt: new Date().toLocaleString("zh-TW", { hour12: false }),
+        secondsUsed: TEST_SECONDS - remaining,
+        autoSubmit,
+        answers: answers.map((answer, index) => ({
+          question: index + 1,
+          selected: answer === null ? "" : questions[index].options[answer],
+          correct: questions[index].options[questions[index].answer],
+          isCorrect: answer === questions[index].answer
+        }))
+      };
+
+      submitted = true;
+      clearInterval(timerId);
+      setQuizEnabled(false);
+      currentScore.textContent = score;
+      saveHistory(record);
+      submitRemote(record);
+      renderResult(record);
+      dialogText.textContent = `${record.title}，你的分數是 ${score} 分。答對 ${correct} 題，共 ${questions.length} 題。`;
+      dialog.showModal();
+    }
+
+    function renderResult(record) {
+      resultPanel.classList.add("visible");
+      resultText.textContent = `${record.title}：${record.score} 分，答對 ${record.correct}/${record.total} 題。`;
+      answerReview.innerHTML = record.answers.map((item) => {
+        const className = item.isCorrect ? "ok" : "miss";
+        const selected = item.selected || "未作答";
+        return `<div class="${className}">第 ${item.question} 題：你的答案 ${selected}；正確答案 ${item.correct}</div>`;
+      }).join("");
+      resultPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderHistory() {
+      const history = getHistory();
+      if (!history.length) {
+        historyList.innerHTML = "<p class='notice'>尚無作答紀錄。</p>";
+        return;
+      }
+      historyList.innerHTML = history.map((record) => `
+        <div class="record">
+          <strong>${record.title}：${record.score} 分</strong>
+          <span>${record.submittedAt}｜答對 ${record.correct}/${record.total}｜用時 ${Math.floor(record.secondsUsed / 60)}分${record.secondsUsed % 60}秒</span>
+        </div>
+      `).join("");
+    }
+
+    function resetQuiz() {
+      window.speechSynthesis?.cancel();
+      clearInterval(timerId);
+      remaining = TEST_SECONDS;
+      started = false;
+      submitted = false;
+      timeLeft.textContent = formatTime(remaining);
+      currentScore.textContent = "--";
+      resultPanel.classList.remove("visible");
+      answerReview.innerHTML = "";
+      quizForm.reset();
+      setQuizEnabled(false);
+      updateAnsweredCount();
+    }
+
+    function downloadCsv() {
+      const history = getHistory();
+      const rows = [
+        ["作答標題", "分數", "答對題數", "總題數", "送出時間", "用時秒數", "是否自動交卷"],
+        ...history.map((record) => [
+          record.title,
+          record.score,
+          record.correct,
+          record.total,
+          record.submittedAt,
+          record.secondsUsed,
+          record.autoSubmit ? "是" : "否"
+        ])
+      ];
+      const csv = rows.map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(",")).join("\n");
+      const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "unit3-4-listening-history.csv";
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function generateQr() {
+      const url = document.querySelector("#quizUrl").value.trim() || location.href;
+      if (!url) return;
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}`;
+      document.querySelector("#qrPreview").innerHTML = `<img alt="測驗 QR code" src="${qrUrl}">`;
+    }
+
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest(".listen-btn");
+      if (!button) return;
+      speak(questions[Number(button.dataset.index)].listen);
+    });
+
+    quizForm.addEventListener("change", updateAnsweredCount);
+
+    startBtn.addEventListener("click", () => {
+      if (!validateStudent()) {
+        alert("請先填寫年級、班級、座號。");
+        return;
+      }
+      started = true;
+      submitted = false;
+      setQuizEnabled(true);
+      startTimer();
+      speak("Listening test. Choose the best answer. You have twenty minutes.");
+    });
+
+    document.querySelector("#playAllBtn").addEventListener("click", () => {
+      speak("This is a listening test for Unit three and Unit four. Fill in your grade, class, and number. Listen and choose the best answer.");
+    });
+
+    submitBtn.addEventListener("click", () => submitQuiz(false));
+    resetBtn.addEventListener("click", resetQuiz);
+    document.querySelector("#closeDialogBtn").addEventListener("click", () => dialog.close());
+    document.querySelector("#downloadCsvBtn").addEventListener("click", downloadCsv);
+    document.querySelector("#qrBtn").addEventListener("click", generateQr);
+    document.querySelector("#clearHistoryBtn").addEventListener("click", () => {
+      if (confirm("確定清除本機作答紀錄？")) {
+        localStorage.removeItem(STORAGE_KEY);
+        renderHistory();
+      }
+    });
+
+    renderQuestions();
+    renderHistory();
+    setQuizEnabled(false);
+    updateAnsweredCount();
+    refreshPreferredVoice();
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.onvoiceschanged = refreshPreferredVoice;
+    }
+  </script>
+</body>
+</html>
