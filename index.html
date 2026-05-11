@@ -45,6 +45,195 @@
       padding: 28px 0 44px;
     }
 
+    .entry-view {
+      min-height: 100vh;
+      padding: 8px 0 40px;
+    }
+
+    .entry-hero {
+      text-align: center;
+      max-width: 740px;
+      margin: 0 auto 58px;
+    }
+
+    .entry-hero h1 {
+      font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+      font-size: clamp(2.15rem, 5vw, 3.2rem);
+      line-height: 1.08;
+    }
+
+    .entry-hero p {
+      margin: 14px auto 10px;
+      color: #4f5965;
+      font-size: 1.05rem;
+      max-width: 620px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 24px;
+      padding: 3px 12px;
+      border-radius: 999px;
+      color: #116149;
+      background: #c8f7d8;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .status-pill::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #16a34a;
+    }
+
+    .entry-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 26px;
+      width: min(720px, 100%);
+      margin: 0 auto;
+    }
+
+    .entry-card {
+      border: 1px solid #d9e0e7;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .subject-icon,
+    .teacher-icon {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+      font-size: 1.55rem;
+    }
+
+    .subject-icon {
+      background: #e7f4f2;
+    }
+
+    .teacher-icon {
+      color: #fff;
+      background: #17212b;
+      margin-bottom: 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--accent-dark);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .entry-card h2 {
+      margin: 0;
+      font-size: clamp(1.45rem, 3vw, 2rem);
+      line-height: 1.2;
+    }
+
+    .entry-card p {
+      color: var(--muted);
+      margin: 10px 0 0;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .chip {
+      min-height: 28px;
+      border-radius: 999px;
+      padding: 5px 10px;
+      color: #075985;
+      background: #e0f2fe;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .entry-action-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+    }
+
+    .entry-qr {
+      display: grid;
+      place-items: center;
+      width: 96px;
+      height: 96px;
+      border-radius: 8px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .entry-qr img {
+      width: 86px;
+      height: 86px;
+    }
+
+    .entry-action-copy {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+    }
+
+    .teacher-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .teacher-links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .teacher-links button {
+      justify-content: space-between;
+      width: 100%;
+      color: var(--ink);
+      background: #f7f9fb;
+      border-color: var(--line);
+      text-align: left;
+    }
+
+    .teacher-links button:hover {
+      background: #edf5f4;
+    }
+
+    .entry-footer {
+      margin-top: 38px;
+      text-align: center;
+      color: #7a8490;
+      font-size: 0.92rem;
+    }
+
+    .quiz-view[hidden],
+    .entry-view[hidden] {
+      display: none;
+    }
+
     header {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -368,8 +557,14 @@
 
       .student-grid,
       .options,
-      .scorebox {
+      .scorebox,
+      .teacher-links {
         grid-template-columns: 1fr;
+      }
+
+      .entry-action-row {
+        align-items: flex-start;
+        flex-direction: column;
       }
 
       .q-head {
@@ -381,6 +576,55 @@
 </head>
 <body>
   <main class="app">
+    <section class="entry-view" id="entryView">
+      <section class="entry-hero">
+        <h1>班級評量入口</h1>
+        <p>選擇英語聽力測驗，掃描 QR Code 或直接點選即可開始作答。所有紀錄同步雲端，老師可隨時查閱。</p>
+        <span class="status-pill">系統運作中</span>
+      </section>
+
+      <section class="entry-grid">
+        <article class="entry-card">
+          <div class="subject-icon" aria-hidden="true">EN</div>
+          <p class="eyebrow">English Listening</p>
+          <h2>六下英語聽力測驗</h2>
+          <p>Unit 3 How Much Is the T-shirt? / Unit 4 What's Your Favorite ...，共 20 題，作答時間 20 分鐘。</p>
+          <div class="chip-row" aria-label="測驗資訊">
+            <span class="chip">聽力理解</span>
+            <span class="chip">購物句型</span>
+            <span class="chip">Favorite 句型</span>
+            <span class="chip">滿分 100</span>
+          </div>
+          <div class="entry-action-row">
+            <div class="entry-qr" id="entryQrPreview">QR</div>
+            <div>
+              <div class="entry-action-copy">手機掃描 QR Code 作答</div>
+              <button id="entryStartBtn" type="button">前往作答 ›</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="entry-card">
+          <div class="teacher-head">
+            <div class="teacher-icon" aria-hidden="true">T</div>
+            <div>
+              <h2>教師專區</h2>
+              <p>查閱本機作答歷程與下載成績紀錄。</p>
+            </div>
+          </div>
+          <div class="teacher-links">
+            <button id="teacherHistoryBtn" type="button">作答歷程查閱 <span aria-hidden="true">→</span></button>
+            <button id="teacherCsvBtn" type="button">下載 CSV <span aria-hidden="true">→</span></button>
+          </div>
+        </article>
+      </section>
+
+      <footer class="entry-footer">
+        國小英語線上評量系統・作答紀錄儲存於 Firebase
+      </footer>
+    </section>
+
+    <section class="quiz-view" id="quizView" hidden>
     <header>
       <section>
         <h1>六下英語聽力測驗 Unit 3-4</h1>
@@ -464,6 +708,7 @@
         </section>
       </aside>
     </section>
+    </section>
   </main>
 
   <dialog id="scoreDialog">
@@ -476,6 +721,16 @@
 
   <script>
     const SUBMIT_ENDPOINT = "";
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyAqaNjd6AyAYz4qQ4bLk_l2ZOU5GPs00_o",
+      authDomain: "english-listening-test-2531b.firebaseapp.com",
+      projectId: "english-listening-test-2531b",
+      storageBucket: "english-listening-test-2531b.firebasestorage.app",
+      messagingSenderId: "168515123909",
+      appId: "1:168515123909:web:5b4e592982c568f8f18eac",
+      measurementId: "G-FSXPKJJEL4"
+    };
+    const FIREBASE_COLLECTION = "listeningTestSubmissions";
     const STORAGE_KEY = "hewgo8-unit3-4-listening-history";
     const TEST_SECONDS = 20 * 60;
 
@@ -635,12 +890,17 @@
     const historyList = document.querySelector("#historyList");
     const dialog = document.querySelector("#scoreDialog");
     const dialogText = document.querySelector("#dialogText");
+    const entryView = document.querySelector("#entryView");
+    const quizView = document.querySelector("#quizView");
 
     let timerId = null;
     let remaining = TEST_SECONDS;
     let started = false;
     let submitted = false;
     let preferredVoice = null;
+    let firestoreDb = null;
+    let firestoreAddDoc = null;
+    let firestoreCollection = null;
 
     function renderQuestions() {
       quizForm.innerHTML = questions.map((question, index) => {
@@ -663,6 +923,24 @@
           </article>
         `;
       }).join("");
+    }
+
+    function getQuizLink() {
+      const url = new URL(location.href);
+      url.hash = "quiz";
+      return url.href;
+    }
+
+    function renderQr(target, url, size = 220) {
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(url)}`;
+      target.innerHTML = `<img alt="測驗 QR code" src="${qrUrl}">`;
+    }
+
+    function showQuiz() {
+      entryView.hidden = true;
+      quizView.hidden = false;
+      if (location.hash !== "#quiz") history.replaceState(null, "", getQuizLink());
+      quizView.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     function choosePreferredVoice() {
@@ -788,6 +1066,45 @@
       renderHistory();
     }
 
+    function isFirebaseConfigured() {
+      return Boolean(
+        FIREBASE_CONFIG.apiKey &&
+        FIREBASE_CONFIG.authDomain &&
+        FIREBASE_CONFIG.projectId &&
+        FIREBASE_CONFIG.appId
+      );
+    }
+
+    async function initFirebase() {
+      if (!isFirebaseConfigured() || firestoreDb) return firestoreDb;
+
+      const [{ initializeApp }, firestore] = await Promise.all([
+        import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"),
+        import("https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js")
+      ]);
+
+      const app = initializeApp(FIREBASE_CONFIG);
+      firestoreDb = firestore.getFirestore(app);
+      firestoreAddDoc = firestore.addDoc;
+      firestoreCollection = firestore.collection;
+      return firestoreDb;
+    }
+
+    async function submitFirebase(record) {
+      if (!isFirebaseConfigured()) return;
+      try {
+        const db = await initFirebase();
+        await firestoreAddDoc(firestoreCollection(db, FIREBASE_COLLECTION), {
+          ...record,
+          createdAt: new Date().toISOString(),
+          userAgent: navigator.userAgent
+        });
+      } catch (error) {
+        console.warn("Firebase submit failed", error);
+        alert("已在本機保存作答紀錄，但 Firebase 雲端同步失敗。請通知老師檢查網路或 Firebase 設定。");
+      }
+    }
+
     async function submitRemote(record) {
       if (!SUBMIT_ENDPOINT) return;
       try {
@@ -833,6 +1150,7 @@
       currentScore.textContent = score;
       saveHistory(record);
       submitRemote(record);
+      submitFirebase(record);
       renderResult(record);
       dialogText.textContent = `${record.title}，你的分數是 ${score} 分。答對 ${correct} 題，共 ${questions.length} 題。`;
       dialog.showModal();
@@ -903,10 +1221,9 @@
     }
 
     function generateQr() {
-      const url = document.querySelector("#quizUrl").value.trim() || location.href;
+      const url = document.querySelector("#quizUrl").value.trim() || getQuizLink();
       if (!url) return;
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}`;
-      document.querySelector("#qrPreview").innerHTML = `<img alt="測驗 QR code" src="${qrUrl}">`;
+      renderQr(document.querySelector("#qrPreview"), url);
     }
 
     document.addEventListener("click", (event) => {
@@ -938,6 +1255,12 @@
     document.querySelector("#closeDialogBtn").addEventListener("click", () => dialog.close());
     document.querySelector("#downloadCsvBtn").addEventListener("click", downloadCsv);
     document.querySelector("#qrBtn").addEventListener("click", generateQr);
+    document.querySelector("#entryStartBtn").addEventListener("click", showQuiz);
+    document.querySelector("#teacherHistoryBtn").addEventListener("click", () => {
+      showQuiz();
+      historyList.closest(".panel").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    document.querySelector("#teacherCsvBtn").addEventListener("click", downloadCsv);
     document.querySelector("#clearHistoryBtn").addEventListener("click", () => {
       if (confirm("確定清除本機作答紀錄？")) {
         localStorage.removeItem(STORAGE_KEY);
@@ -947,12 +1270,16 @@
 
     renderQuestions();
     renderHistory();
+    renderQr(document.querySelector("#entryQrPreview"), getQuizLink(), 172);
+    document.querySelector("#quizUrl").value = getQuizLink();
+    generateQr();
     setQuizEnabled(false);
     updateAnsweredCount();
     refreshPreferredVoice();
     if ("speechSynthesis" in window) {
       window.speechSynthesis.onvoiceschanged = refreshPreferredVoice;
     }
+    if (location.hash === "#quiz") showQuiz();
   </script>
 </body>
 </html>
